@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com</groupId>
-	<artifactId>sprint</artifactId>m
+	<artifactId>sprint</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sprint</name>
 	<description/>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<scope>annotationProcessor</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
