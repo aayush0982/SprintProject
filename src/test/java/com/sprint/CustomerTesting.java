@@ -391,4 +391,41 @@ public class CustomerTesting {
                         """))
                 .andExpect(status().isCreated());
     }
+
+    @Test
+    public void test_findByCity_success() throws Exception {
+        mockMvc.perform(get("/customers/search/findByAddress_City_CityIgnoreCase")
+                .param("city", "Abha"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content.length()").value(org.hamcrest.Matchers.greaterThan(0)))
+                .andExpect(jsonPath("$.content[0].firstName").exists())
+                .andExpect(jsonPath("$.content[0].lastName").exists());
+    }
+
+    @Test
+    public void test_findByCity_noResult() throws Exception {
+        mockMvc.perform(get("/customers/search/findByAddress_City_CityIgnoreCase")
+                .param("city", "___NO_CITY_SHOULD_EXIST_123456___"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content.length()").value(1))
+                .andExpect(jsonPath("$.content[0].value").isArray())
+                .andExpect(jsonPath("$.content[0].value.length()").value(0));
+    }
+
+    @Test
+    public void test18_put_partialUpdate() throws Exception {
+        mockMvc.perform(put("/customers/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "firstName": "PartialUpdate"
+                        }
+                        """))
+                .andExpect(status().isNoContent());
+        mockMvc.perform(get("/customers/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName").value("PartialUpdate"));
+    }
 }
