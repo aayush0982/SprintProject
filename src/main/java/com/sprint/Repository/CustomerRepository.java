@@ -11,8 +11,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.validation.annotation.Validated;
 
 @RepositoryRestResource(collectionResourceRel = "customers", path = "customers")
+@Validated
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Override
@@ -28,8 +31,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     <S extends Customer> S save(S entity);
 
     List<Customer> findByFirstNameAndLastName(
-        @Param("firstName") String firstName,
-        @Param("lastName") String lastName);
+        @Param("firstName") @NotBlank String firstName,
+        @Param("lastName") @NotBlank String lastName);
 
     Optional<Customer> findByEmail(@Param("email") String email);
 
