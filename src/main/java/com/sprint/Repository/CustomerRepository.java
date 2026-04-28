@@ -26,10 +26,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @RestResource(exported = false)
     void delete(Customer entity);
 
-    @Override
-    @RestResource(exported = false)
-    <S extends Customer> S save(S entity);
-
     List<Customer> findByFirstNameAndLastName(
         @Param("firstName") @NotBlank String firstName,
         @Param("lastName") @NotBlank String lastName);

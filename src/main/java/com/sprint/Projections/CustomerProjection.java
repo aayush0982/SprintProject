@@ -41,5 +41,5 @@ public interface CustomerProjection {
     // and Customer entity must have @OneToMany List<Rental> rentals
     // for this to work
     // -------------------------------------------------------
-    List<RentalProjection> getRentals();
+    // List<RentalProjection> getRentals();
 }
