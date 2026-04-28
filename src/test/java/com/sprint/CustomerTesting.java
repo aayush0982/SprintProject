@@ -191,9 +191,12 @@ public class CustomerTesting {
                           "firstName": "Test",
                           "lastName": "User",
                           "email": "test@test.com",
-                          "active": true
+                          "active": true,
+                          "store": "http://localhost/customers/../stores/1",
+                          "address": "http://localhost/customers/../addresses/1"
                         }
                         """))
+                .andDo(print())
                 .andExpect(status().isCreated());
     }
 
