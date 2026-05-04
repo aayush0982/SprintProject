@@ -28,7 +28,7 @@ public class City {
     private String city;
     
     @NotNull(message = "Country is required")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
     

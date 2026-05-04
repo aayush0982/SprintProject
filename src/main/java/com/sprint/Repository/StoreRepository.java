@@ -13,7 +13,8 @@ import com.sprint.Projections.StoreProjection;
 public interface StoreRepository extends JpaRepository<Store, Long> {
     @EntityGraph(attributePaths = {
             "address", 
-            "address.city"
+            "address.city",
+            "address.city.country"
         }
     )
     Page<Store> findByAddress_City_CityIgnoreCase(String city, Pageable pageable);

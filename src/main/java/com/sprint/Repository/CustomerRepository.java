@@ -20,6 +20,27 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
+        @Override
+        @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = {
+                        "address",
+                        "address.city",
+                        "address.city.country",
+                        "store",
+                        "store.address",
+                        "store.address.city",
+                        "store.address.city.country",
+                        "store.managerStaff",
+                        "store.managerStaff.address",
+                        "store.managerStaff.address.city",
+                        "store.managerStaff.address.city.country",
+                        "rentals",
+                        "rentals.inventory",
+                        "rentals.inventory.film",
+                        "rentals.inventory.film.language",
+                        "rentals.inventory.film.originalLanguage"
+        })
+        Optional<Customer> findById(Long id);
+
     @Override
     @RestResource(exported = false)
     void deleteById(Long id);
@@ -28,17 +49,23 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @RestResource(exported = false)
     void delete(Customer entity);
 
-    List<Customer> findByFirstNameAndLastName(
-            @Param("firstName") @NotBlank String firstName,
-            @Param("lastName") @NotBlank String lastName);
-
     Optional<Customer> findByEmail(@Param("email") String email);
 
     Page<Customer> findByActive(@Param("active") Boolean active, Pageable pageable);
 
-    @EntityGraph(attributePaths = {
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = {
             "address",
-            "address.city"
+            "address.city",
+            "address.city.country"
     })
     Page<Customer> findByAddress_City_CityIgnoreCase(@Param("city") String city, Pageable pageable);
+
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = {
+            "address",
+            "address.city",
+            "address.city.country"
+    })
+    List<Customer> findByFirstNameAndLastName(
+            @Param("firstName") @NotBlank String firstName,
+            @Param("lastName") @NotBlank String lastName);
 }
